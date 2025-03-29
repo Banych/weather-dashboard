@@ -116,8 +116,13 @@ src/
     - Visualizes weather data on a line chart using Chart.js.
 
 ## Error Handling
+ **Error Types:**
+  - **API Errors:** Errors that occur when fetching data from the Open-Meteo API.
+  - **Invalid Inputs:** Errors that occur when the user provides invalid input, such as incorrect latitude and longitude.
 - **Result Type:** The option-t library is used to handle errors consistently across repositories and use cases.
-- **UI Feedback:** Errors are displayed in the UI, such as "Error loading weather data."
+- **UI Feedback:**
+  - User-friendly error messages are displayed in the UI to inform users of issues.
+  - Examples of error messages include "Error loading weather data" for API errors and "Invalid coordinates" for input errors.
 
 ## Testing
 The project includes extensive unit and component tests:
