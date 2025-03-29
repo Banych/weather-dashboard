@@ -33,7 +33,10 @@
       ],
       "@repositories/*": [
         "src/repositories/*"
-      ]
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
     }
   },
   "include": [

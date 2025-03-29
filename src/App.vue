@@ -3,12 +3,13 @@ import useFetchForecastWeather from '@/composables/useFetchForecastWeather';
 import CityInput from '@components/CityInput.vue';
 import CoordinatesInput from '@components/CoordinatesInput.vue';
 import HistoricalDataInput from '@components/HistoricalDataInput.vue';
+import WeatherChart from '@components/WeatherChart.vue';
 import WeatherTable from '@components/WeatherTable.vue';
+import useFetchHistoricalWeather from '@composables/useFetchHistoricalWeather';
 import { type ILocation } from '@domain/interfaces/ILocation';
 import type { City } from '@domain/models/City';
 import type { WeatherReport } from '@domain/models/WeatherReport';
 import { computed, ref } from 'vue';
-import useFetchHistoricalWeather from './composables/useFetchHistoricalWeather';
 
 const selectedCity = ref<City | null>(null);
 const location = ref<ILocation | null>(null);
@@ -98,6 +99,11 @@ const handleSelectCity = (city: City) => {
         <span>Forecast Weather</span>
       </template>
     </WeatherTable>
+    <WeatherChart
+      v-if="!!forecastWeatherData"
+      title="Forecast Weather"
+      :report="forecastWeatherData as WeatherReport"
+    />
     <WeatherTable
       v-if="!!historicalWeatherData"
       :report="historicalWeatherData as WeatherReport"
@@ -106,5 +112,10 @@ const handleSelectCity = (city: City) => {
         <span>Historical Weather</span>
       </template>
     </WeatherTable>
+    <WeatherChart
+      v-if="!!historicalWeatherData"
+      title="Historical Weather"
+      :report="historicalWeatherData as WeatherReport"
+    />
   </div>
 </template>

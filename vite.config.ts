@@ -16,6 +16,7 @@ export default defineConfig({
       '@application': path.resolve(__dirname, 'src/application'),
       '@domain': path.resolve(__dirname, 'src/domain'),
       '@repositories': path.resolve(__dirname, 'src/repositories'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
     },
   },
 });
