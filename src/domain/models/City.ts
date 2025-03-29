@@ -13,19 +13,19 @@ export class City implements ILocation {
   ) {}
 
   private static validateDTO(dto: LocationDTO): void {
-    if (!dto.latitude || !dto.longitude) {
-      throw new Error('Invalid LocationDTO');
-    }
-    if (isNaN(dto.latitude) || isNaN(dto.longitude)) {
+    if (
+      !dto.latitude ||
+      !dto.longitude ||
+      isNaN(dto.latitude) ||
+      isNaN(dto.longitude)
+    ) {
       throw new Error('Invalid latitude or longitude');
     }
-    if (dto.elevation && isNaN(dto.elevation)) {
-      throw new Error('Invalid elevation');
-    }
-    if (typeof dto.latitude !== 'number' || typeof dto.longitude !== 'number') {
-      throw new Error('Invalid latitude or longitude');
-    }
-    if (dto.elevation && typeof dto.elevation !== 'number') {
+    if (
+      dto.elevation === null ||
+      dto.elevation === undefined ||
+      isNaN(dto.elevation)
+    ) {
       throw new Error('Invalid elevation');
     }
     if (!dto.name) {
@@ -45,6 +45,10 @@ export class City implements ILocation {
       dto.country_code,
       dto.elevation
     );
+  }
+
+  static fromDTOs(dtos: LocationDTO[]): City[] {
+    return dtos.map((dto) => this.fromDTO(dto));
   }
 
   static fromLocation(location: ILocation): City {

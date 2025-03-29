@@ -1,4 +1,8 @@
-import type { WeatherDTO, WeatherUnitsDTO } from '@/domain/dto/WeatherDTO';
+import type {
+  SmallWeatherDTO,
+  WeatherDTO,
+  WeatherUnitsDTO,
+} from '@/domain/dto/WeatherDTO';
 import type { IWeather } from '@/domain/interfaces/IWeather';
 
 export class RelativeHumidity implements IWeather {
@@ -8,12 +12,9 @@ export class RelativeHumidity implements IWeather {
     public readonly date: Date
   ) {}
 
-  private static validateDTO(dto: {
-    value: number;
-    units: string;
-    date: string;
-  }): void {
+  private static validateDTO(dto: SmallWeatherDTO): void {
     if (
+      typeof dto.value !== 'number' ||
       dto.value === null ||
       dto.value === undefined ||
       !dto.units ||
@@ -21,7 +22,7 @@ export class RelativeHumidity implements IWeather {
     ) {
       throw new Error('Invalid RelativeHumidityDTO');
     }
-    if (isNaN(Date.parse(dto.date))) {
+    if (typeof dto.date !== 'string' || isNaN(Date.parse(dto.date))) {
       throw new Error('Invalid date');
     }
     if (typeof dto.value !== 'number') {
@@ -29,11 +30,7 @@ export class RelativeHumidity implements IWeather {
     }
   }
 
-  static fromDTO(dto: {
-    value: number;
-    units: string;
-    date: string;
-  }): RelativeHumidity {
+  static fromDTO(dto: SmallWeatherDTO): RelativeHumidity {
     this.validateDTO(dto);
 
     return new RelativeHumidity(dto.value, dto.units, new Date(dto.date));

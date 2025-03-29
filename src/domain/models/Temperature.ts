@@ -1,4 +1,8 @@
-import type { WeatherDTO, WeatherUnitsDTO } from '@/domain/dto/WeatherDTO';
+import type {
+  SmallWeatherDTO,
+  WeatherDTO,
+  WeatherUnitsDTO,
+} from '@/domain/dto/WeatherDTO';
 import type { IWeather } from '@/domain/interfaces/IWeather';
 
 export class Temperature implements IWeather {
@@ -8,11 +12,7 @@ export class Temperature implements IWeather {
     public readonly date: Date
   ) {}
 
-  private static validateDTO(dto: {
-    value: number;
-    units: string;
-    date: string;
-  }): void {
+  private static validateDTO(dto: SmallWeatherDTO): void {
     if (
       dto.value === null ||
       dto.value === undefined ||
@@ -21,22 +21,18 @@ export class Temperature implements IWeather {
     ) {
       throw new Error('Invalid TemperatureDTO');
     }
+    if (typeof dto.value !== 'number' || isNaN(dto.value)) {
+      throw new Error('Invalid value');
+    }
     if (dto.units !== '°C' && dto.units !== '°F') {
       throw new Error('Invalid units');
     }
     if (isNaN(Date.parse(dto.date))) {
       throw new Error('Invalid date');
     }
-    if (typeof dto.value !== 'number') {
-      throw new Error('Invalid value');
-    }
   }
 
-  static fromDTO(dto: {
-    value: number;
-    units: string;
-    date: string;
-  }): Temperature {
+  static fromDTO(dto: SmallWeatherDTO): Temperature {
     this.validateDTO(dto);
 
     return new Temperature(

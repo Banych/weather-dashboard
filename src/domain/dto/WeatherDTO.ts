@@ -11,3 +11,9 @@ export interface WeatherUnitsDTO {
   relative_humidity_2m: string;
   wind_speed_10m: string;
 }
+
+export interface SmallWeatherDTO {
+  value: number;
+  units: string;
+  date: string;
+}

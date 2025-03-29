@@ -3,7 +3,6 @@ import type { WeatherDTO, WeatherUnitsDTO } from '@/domain/dto/WeatherDTO';
 import type { IWeatherRepository } from '@/domain/interfaces/IWeatherRepository';
 import { WeatherReport } from '@/domain/models/WeatherReport';
 import { AxiosError } from 'axios';
-import { isDate } from 'date-fns';
 import { createErr, createOk, type Result } from 'option-t/plain_result';
 
 export class HistoricalWeatherRepository implements IWeatherRepository {
@@ -16,10 +15,10 @@ export class HistoricalWeatherRepository implements IWeatherRepository {
     if (isNaN(latitude) || isNaN(longitude)) {
       return createErr('Invalid latitude or longitude');
     }
-    if (startDate && !isDate(new Date(startDate))) {
+    if (startDate && isNaN(Date.parse(startDate))) {
       return createErr('Invalid start date');
     }
-    if (endDate && !isDate(new Date(endDate))) {
+    if (endDate && isNaN(Date.parse(endDate))) {
       return createErr('Invalid end date');
     }
     if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
