@@ -2,22 +2,24 @@
 import useGeolocation from '@composables/useGeolocation';
 import type { ILocation } from '@domain/interfaces/ILocation';
 
-defineProps<{
+const props = defineProps<{
   currentLocation: ILocation | null;
 }>();
 
 const { error, getLocation, isLoading } = useGeolocation();
 
 const emit = defineEmits<{
-  (e: 'update:latitude', value: number): void;
-  (e: 'update:longitude', value: number): void;
+  (e: 'update:location', location: ILocation): void;
 }>();
 
 const handleLatitudeChange = (event: Event) => {
   const input = event.target as HTMLInputElement;
   const value = parseFloat(input.value);
   if (!isNaN(value)) {
-    emit('update:latitude', value);
+    emit('update:location', {
+      ...(props.currentLocation || { latitude: 0, longitude: 0 }),
+      latitude: value,
+    });
   }
 };
 
@@ -25,7 +27,10 @@ const handleLongitudeChange = (event: Event) => {
   const input = event.target as HTMLInputElement;
   const value = parseFloat(input.value);
   if (!isNaN(value)) {
-    emit('update:longitude', value);
+    emit('update:location', {
+      ...(props.currentLocation || { latitude: 0, longitude: 0 }),
+      longitude: value,
+    });
   }
 };
 
@@ -33,8 +38,9 @@ const handleClickGetLocation = async () => {
   try {
     const location = await getLocation();
     if (location) {
-      emit('update:latitude', location.latitude);
-      emit('update:longitude', location.longitude);
+      emit('update:location', location);
+    } else {
+      console.error('Location not found');
     }
   } catch (err) {
     console.error('Error getting location:', err);

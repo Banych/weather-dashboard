@@ -1,10 +1,10 @@
 import type { WeatherDTO, WeatherUnitsDTO } from '@/domain/dto/WeatherDTO';
 import type { IWeather } from '@/domain/interfaces/IWeather';
 
-export class Temperature implements IWeather {
+export class RelativeHumidity implements IWeather {
   constructor(
     public readonly value: number,
-    public readonly units: '°C' | '°F',
+    public readonly units: string,
     public readonly date: Date
   ) {}
 
@@ -19,10 +19,7 @@ export class Temperature implements IWeather {
       !dto.units ||
       !dto.date
     ) {
-      throw new Error('Invalid TemperatureDTO');
-    }
-    if (dto.units !== '°C' && dto.units !== '°F') {
-      throw new Error('Invalid units');
+      throw new Error('Invalid RelativeHumidityDTO');
     }
     if (isNaN(Date.parse(dto.date))) {
       throw new Error('Invalid date');
@@ -36,48 +33,41 @@ export class Temperature implements IWeather {
     value: number;
     units: string;
     date: string;
-  }): Temperature {
+  }): RelativeHumidity {
     this.validateDTO(dto);
 
-    return new Temperature(
-      dto.value,
-      dto.units as '°C' | '°F',
-      new Date(dto.date)
-    );
+    return new RelativeHumidity(dto.value, dto.units, new Date(dto.date));
   }
 
-  static fromWeather(weather: IWeather): Temperature {
+  static fromWeather(weather: IWeather): RelativeHumidity {
     this.validateDTO({
       value: weather.value,
       units: weather.units,
       date: weather.date.toISOString(),
     });
 
-    return new Temperature(
-      weather.value,
-      weather.units as '°C' | '°F',
-      weather.date
-    );
+    return new RelativeHumidity(weather.value, weather.units, weather.date);
   }
 
   static fromWeatherDTO(
     dto: WeatherDTO,
     units: WeatherUnitsDTO
-  ): Temperature[] {
-    if (!dto.temperature_2m || !units.temperature_2m) {
+  ): RelativeHumidity[] {
+    if (!dto.relative_humidity_2m || !units.relative_humidity_2m) {
       throw new Error('Invalid WeatherDTO');
     }
 
-    return dto.temperature_2m.map((value, index) => {
-      const time = dto.time[index];
-      const unit = units.temperature_2m;
+    return dto.relative_humidity_2m.map((humidity, index) => {
+      const date = new Date(dto.time[index]);
+      const unit = units.relative_humidity_2m;
 
       this.validateDTO({
-        value,
+        value: humidity,
         units: unit,
-        date: time,
+        date: date.toISOString(),
       });
-      return new Temperature(value, unit as '°C' | '°F', new Date(time));
+
+      return new RelativeHumidity(humidity, unit, date);
     });
   }
 }

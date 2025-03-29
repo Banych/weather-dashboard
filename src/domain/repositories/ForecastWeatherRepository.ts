@@ -19,7 +19,7 @@ export class ForecastWeatherRepository implements IWeatherRepository {
         hourly: WeatherDTO;
         hourly_units: WeatherUnitsDTO;
       }>(
-        `?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&timezone=auto`
+        `?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`
       );
       const weatherData = response.data.hourly;
       const weatherUnits = response.data.hourly_units;
