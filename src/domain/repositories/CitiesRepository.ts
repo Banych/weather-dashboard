@@ -11,11 +11,13 @@ export class CitiesRepository implements ILocationRepository {
     }
 
     try {
-      const response = await LocationClient.get<LocationDTO[]>(
-        `?query=${query}`
+      const response = await LocationClient.get<{ results?: LocationDTO[] }>(
+        `?name=${query}`
       );
 
-      const cities = response.data.map((location) => City.fromDTO(location));
+      const cities = (response.data.results || []).map((location) =>
+        City.fromDTO(location)
+      );
 
       return createOk(cities);
     } catch (error) {

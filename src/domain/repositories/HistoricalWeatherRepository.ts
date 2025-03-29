@@ -1,6 +1,7 @@
 import HistoricalWeatherClient from '@/domain/clients/HistoricalWeatherClient';
-import type { IWeather } from '@/domain/interfaces/IWeather';
+import type { WeatherDTO, WeatherUnitsDTO } from '@/domain/dto/WeatherDTO';
 import type { IWeatherRepository } from '@/domain/interfaces/IWeatherRepository';
+import { WeatherReport } from '@/domain/models/WeatherReport';
 import { AxiosError } from 'axios';
 import { isDate } from 'date-fns';
 import { createErr, createOk, type Result } from 'option-t/plain_result';
@@ -11,7 +12,7 @@ export class HistoricalWeatherRepository implements IWeatherRepository {
     longitude: number,
     startDate?: string,
     endDate?: string
-  ): Promise<Result<IWeather[], string>> {
+  ): Promise<Result<WeatherReport, string>> {
     if (isNaN(latitude) || isNaN(longitude)) {
       return createErr('Invalid latitude or longitude');
     }
@@ -27,21 +28,20 @@ export class HistoricalWeatherRepository implements IWeatherRepository {
 
     try {
       const response = await HistoricalWeatherClient.get<{
-        hourly: { time: string[]; temperature_2m: number[] };
-        hourly_units: { time: string; temperature_2m: string };
+        hourly: WeatherDTO;
+        hourly_units: WeatherUnitsDTO;
       }>(
         `?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&timezone=auto&start=${startDate}&end=${endDate}`
       );
       const weatherData = response.data.hourly;
       const weatherUnits = response.data.hourly_units;
 
-      const temperatures = weatherData.time.map((time, index) => ({
-        value: weatherData.temperature_2m[index],
-        units: weatherUnits.temperature_2m,
-        date: new Date(time),
-      }));
+      const weatherReport = WeatherReport.fromWeatherDTO(
+        weatherData,
+        weatherUnits
+      );
 
-      return createOk(temperatures);
+      return createOk(weatherReport);
     } catch (error) {
       if (error instanceof AxiosError) {
         return createErr(error.message);

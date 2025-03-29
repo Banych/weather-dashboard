@@ -1,8 +1,7 @@
 import ForecastWeatherClient from '@/domain/clients/ForecastWeatherClient';
 import type { WeatherDTO, WeatherUnitsDTO } from '@/domain/dto/WeatherDTO';
-import type { IWeather } from '@/domain/interfaces/IWeather';
 import type { IWeatherRepository } from '@/domain/interfaces/IWeatherRepository';
-import { Temperature } from '@/domain/models/Weather';
+import { WeatherReport } from '@/domain/models/WeatherReport';
 import { AxiosError } from 'axios';
 import { type Result, createErr, createOk } from 'option-t/plain_result';
 
@@ -10,7 +9,7 @@ export class ForecastWeatherRepository implements IWeatherRepository {
   async getWeather(
     latitude: number,
     longitude: number
-  ): Promise<Result<IWeather[], string>> {
+  ): Promise<Result<WeatherReport, string>> {
     if (isNaN(latitude) || isNaN(longitude)) {
       return Promise.resolve(createErr('Invalid latitude or longitude'));
     }
@@ -25,12 +24,12 @@ export class ForecastWeatherRepository implements IWeatherRepository {
       const weatherData = response.data.hourly;
       const weatherUnits = response.data.hourly_units;
 
-      const temperatures = Temperature.fromWeatherDTO(
+      const weatherReport = WeatherReport.fromWeatherDTO(
         weatherData,
         weatherUnits
       );
 
-      return createOk(temperatures);
+      return createOk(weatherReport);
     } catch (error) {
       if (error instanceof AxiosError) {
         return createErr(error.message);
