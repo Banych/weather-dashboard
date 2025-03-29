@@ -16,10 +16,10 @@ export class HistoricalWeatherRepository implements IWeatherRepository {
     if (isNaN(latitude) || isNaN(longitude)) {
       return createErr('Invalid latitude or longitude');
     }
-    if (startDate && !isDate(startDate)) {
+    if (startDate && !isDate(new Date(startDate))) {
       return createErr('Invalid start date');
     }
-    if (endDate && !isDate(endDate)) {
+    if (endDate && !isDate(new Date(endDate))) {
       return createErr('Invalid end date');
     }
     if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
@@ -31,7 +31,7 @@ export class HistoricalWeatherRepository implements IWeatherRepository {
         hourly: WeatherDTO;
         hourly_units: WeatherUnitsDTO;
       }>(
-        `?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&timezone=auto&start=${startDate}&end=${endDate}`
+        `?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&timezone=auto&start_date=${startDate}&end_date=${endDate}`
       );
       const weatherData = response.data.hourly;
       const weatherUnits = response.data.hourly_units;

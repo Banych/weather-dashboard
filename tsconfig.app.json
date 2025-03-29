@@ -22,6 +22,9 @@
       "@composables/*": [
         "src/composables/*"
       ],
+      "@constants/*": [
+        "src/constants/*"
+      ],
       "@application/*": [
         "src/application/*"
       ],

@@ -1,15 +1,19 @@
 <script setup lang="ts">
+import useFetchForecastWeather from '@/composables/useFetchForecastWeather';
 import CityInput from '@components/CityInput.vue';
 import CoordinatesInput from '@components/CoordinatesInput.vue';
+import HistoricalDataInput from '@components/HistoricalDataInput.vue';
 import WeatherTable from '@components/WeatherTable.vue';
-import useFetchWeather from '@composables/useFetchWeather';
 import { type ILocation } from '@domain/interfaces/ILocation';
 import type { City } from '@domain/models/City';
 import type { WeatherReport } from '@domain/models/WeatherReport';
 import { computed, ref } from 'vue';
+import useFetchHistoricalWeather from './composables/useFetchHistoricalWeather';
 
 const selectedCity = ref<City | null>(null);
 const location = ref<ILocation | null>(null);
+const startDate = ref<string | null>(null);
+const endDate = ref<string | null>(null);
 
 const currentLocation = computed((): ILocation | null => {
   if (selectedCity.value) {
@@ -22,10 +26,33 @@ const currentLocation = computed((): ILocation | null => {
 });
 
 const {
-  data: weatherData,
-  error: weatherDataError,
-  isLoading: weatherDataIsLoading,
-} = useFetchWeather(currentLocation);
+  data: forecastWeatherData,
+  error: forecastWeatherDataError,
+  isLoading: forecastWeatherDataIsLoading,
+} = useFetchForecastWeather(currentLocation);
+
+const {
+  data: historicalWeatherData,
+  error: historicalWeatherDataError,
+  isLoading: historicalWeatherDataIsLoading,
+} = useFetchHistoricalWeather(currentLocation, startDate, endDate);
+
+const isLoading = computed(() => {
+  return (
+    forecastWeatherDataIsLoading.value || historicalWeatherDataIsLoading.value
+  );
+});
+
+const allErrors = computed(() => {
+  const errors: string[] = [];
+  if (forecastWeatherDataError.value) {
+    errors.push(forecastWeatherDataError.value);
+  }
+  if (historicalWeatherDataError.value) {
+    errors.push(historicalWeatherDataError.value);
+  }
+  return errors.length > 0 ? errors : null;
+});
 
 const handleUpdateLocation = (newLocation: ILocation) => {
   location.value = newLocation;
@@ -39,7 +66,7 @@ const handleSelectCity = (city: City) => {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container m-auto">
     <h1 class="text-2xl leading-10 font-semibold">Weather Dashboard</h1>
     <div class="flex flex-col gap-y-2">
       <CityInput @select="handleSelectCity" />
@@ -47,17 +74,37 @@ const handleSelectCity = (city: City) => {
         :currentLocation="currentLocation"
         @update:location="handleUpdateLocation"
       />
-      <HistoricalDataInput />
-      <!-- <button class="bg-blue-500 text-white px-4 py-2 rounded">
-        Get Weather Data
-      </button> -->
+      <HistoricalDataInput
+        v-model:end-date="endDate"
+        v-model:start-date="startDate"
+      />
     </div>
-    <div v-if="weatherDataIsLoading" class="text-center">
+    <div v-if="isLoading" class="text-center">
       <p>Loading weather data...</p>
     </div>
-    <div v-if="weatherDataError" class="text-red-500 text-center">
-      <p>Error loading weather data: {{ weatherDataError }}</p>
+    <div v-if="allErrors" class="text-red-500 text-center">
+      <p>Error loading weather data:</p>
+      <ul>
+        <li v-for="(error, index) in allErrors" :key="index">
+          {{ error }}
+        </li>
+      </ul>
     </div>
-    <WeatherTable v-if="weatherData" :report="weatherData as WeatherReport" />
+    <WeatherTable
+      v-if="!!forecastWeatherData"
+      :report="forecastWeatherData as WeatherReport"
+    >
+      <template #title>
+        <span>Forecast Weather</span>
+      </template>
+    </WeatherTable>
+    <WeatherTable
+      v-if="!!historicalWeatherData"
+      :report="historicalWeatherData as WeatherReport"
+    >
+      <template #title>
+        <span>Historical Weather</span>
+      </template>
+    </WeatherTable>
   </div>
 </template>
