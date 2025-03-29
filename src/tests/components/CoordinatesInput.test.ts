@@ -25,9 +25,7 @@ describe('CoordinatesInput.vue', () => {
       },
     });
 
-    expect(wrapper.find('label[for="latitude"]').exists()).toBe(true);
     expect(wrapper.find('input[id="latitude"]').exists()).toBe(true);
-    expect(wrapper.find('label[for="longitude"]').exists()).toBe(true);
     expect(wrapper.find('input[id="longitude"]').exists()).toBe(true);
   });
 

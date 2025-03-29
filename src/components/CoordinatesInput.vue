@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import useGeolocation from '@composables/useGeolocation';
 import type { ILocation } from '@domain/interfaces/ILocation';
+import { LocateFixed, MapPin } from 'lucide-vue-next';
 
 const props = defineProps<{
   currentLocation: ILocation | null;
@@ -50,7 +51,7 @@ const handleClickGetLocation = async () => {
 
 <template>
   <div class="flex items-center gap-x-2">
-    <label for="latitude" class="text-lg font-semibold">Latitude</label>
+    <MapPin class="s-6 ml-2" />
     <input
       id="latitude"
       type="number"
@@ -59,7 +60,6 @@ const handleClickGetLocation = async () => {
       :value="currentLocation?.latitude ?? ''"
       @input="handleLatitudeChange"
     />
-    <label for="longitude" class="text-lg font-semibold">Longitude</label>
     <input
       id="longitude"
       type="number"
@@ -75,7 +75,7 @@ const handleClickGetLocation = async () => {
       :title="error ? 'Error getting location' : ''"
       @click.stop="handleClickGetLocation"
     >
-      Get Current Location
+      <LocateFixed class="s-5" />
     </button>
   </div>
 </template>

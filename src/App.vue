@@ -69,7 +69,7 @@ const handleSelectCity = (city: City) => {
 <template>
   <div class="container m-auto">
     <h1 class="text-2xl leading-10 font-semibold">Weather Dashboard</h1>
-    <div class="flex flex-col gap-y-2">
+    <div class="flex gap-2 flex-wrap">
       <CityInput @select="handleSelectCity" />
       <CoordinatesInput
         :currentLocation="currentLocation"
@@ -78,6 +78,7 @@ const handleSelectCity = (city: City) => {
       <HistoricalDataInput
         v-model:end-date="endDate"
         v-model:start-date="startDate"
+        class="w-full"
       />
     </div>
     <div v-if="isLoading" class="text-center">

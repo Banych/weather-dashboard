@@ -28,14 +28,13 @@ const handleFocus = () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-y-2 relative max-w-80">
-    <label for="city" class="text-lg font-semibold">City</label>
+  <div class="relative max-w-80 w-full">
     <input
       id="city"
       :value="selectedCity?.name ?? query"
       type="text"
       placeholder="Enter city name"
-      class="border border-gray-300 rounded p-2"
+      class="border border-gray-300 rounded p-2 w-full"
       @input="query = ($event.target as HTMLInputElement).value"
       @focus="handleFocus"
     />

@@ -64,6 +64,7 @@ watch(
         type="date"
         :value="endDate"
         :max="MAX_END_DATE_FORMATTED"
+        :min="startDate ?? MAX_START_DATE_FORMATTED"
         class="border border-gray-300 rounded px-2 py-1"
         @change="handleEndDateChange"
       />
