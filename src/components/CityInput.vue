@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { City } from '@domain/models/City';
-import useCitySearch from '../composables/useCitySearch';
+import useCitySearch from '@/composables/useCitySearch';
 import { ref } from 'vue';
 
 const emit = defineEmits<{

@@ -73,7 +73,7 @@ const handleClickGetLocation = async () => {
       :disabled="isLoading"
       :class="{ 'cursor-not-allowed': isLoading, 'bg-red-800': error }"
       :title="error ? 'Error getting location' : ''"
-      @click.prevent="handleClickGetLocation"
+      @click.stop="handleClickGetLocation"
     >
       Get Current Location
     </button>
