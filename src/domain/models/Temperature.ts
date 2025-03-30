@@ -2,8 +2,8 @@ import type {
   SmallWeatherDTO,
   WeatherDTO,
   WeatherUnitsDTO,
-} from '@/domain/dto/WeatherDTO';
-import type { IWeather } from '@/domain/interfaces/IWeather';
+} from '@domain/dto/WeatherDTO';
+import type { IWeather } from '@domain/interfaces/IWeather';
 
 export class Temperature implements IWeather {
   constructor(

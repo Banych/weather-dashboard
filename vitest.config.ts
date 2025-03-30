@@ -11,7 +11,6 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
       '@tests': path.resolve(__dirname, 'src/tests'),
       '@components': path.resolve(__dirname, 'src/components'),
       '@composables': path.resolve(__dirname, 'src/composables'),
@@ -19,6 +18,8 @@ export default defineConfig({
       '@application': path.resolve(__dirname, 'src/application'),
       '@domain': path.resolve(__dirname, 'src/domain'),
       '@repositories': path.resolve(__dirname, 'src/repositories'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
+      '@': path.resolve(__dirname, 'src'),
     },
   },
 });

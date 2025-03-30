@@ -1,4 +1,4 @@
-import useCitySearch from '@/composables/useCitySearch';
+import useCitySearch from '@composables/useCitySearch';
 import { flushPromises } from '@vue/test-utils';
 import { createErr, createOk } from 'option-t/plain_result';
 import { describe, expect, it, vi } from 'vitest';

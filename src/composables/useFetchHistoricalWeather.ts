@@ -1,7 +1,7 @@
-import { FetchHistoricalWeather } from '@/application/use-cases/FetchHistoricalWeather';
-import type { ILocation } from '@/domain/interfaces/ILocation';
-import type { WeatherReport } from '@/domain/models/WeatherReport';
-import { HistoricalWeatherRepository } from '@/domain/repositories/HistoricalWeatherRepository';
+import { FetchHistoricalWeather } from '@application/use-cases/FetchHistoricalWeather';
+import type { ILocation } from '@domain/interfaces/ILocation';
+import type { WeatherReport } from '@domain/models/WeatherReport';
+import { HistoricalWeatherRepository } from '@domain/repositories/HistoricalWeatherRepository';
 import { ref, watch, type Ref } from 'vue';
 
 export default (

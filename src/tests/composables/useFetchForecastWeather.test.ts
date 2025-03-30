@@ -1,12 +1,12 @@
-import useFetchForecastWeather from '@/composables/useFetchForecastWeather';
-import type { ILocation } from '@/domain/interfaces/ILocation';
-import { WeatherReport } from '@/domain/models/WeatherReport';
+import useFetchForecastWeather from '@composables/useFetchForecastWeather';
+import type { ILocation } from '@domain/interfaces/ILocation';
+import { WeatherReport } from '@domain/models/WeatherReport';
 import { flushPromises } from '@vue/test-utils';
 import { createErr, createOk } from 'option-t/plain_result';
 import { describe, expect, it, vi } from 'vitest';
 import { ref } from 'vue';
 
-vi.mock('@/domain/repositories/ForecastWeatherRepository', () => ({
+vi.mock('@domain/repositories/ForecastWeatherRepository', () => ({
   ForecastWeatherRepository: vi.fn().mockImplementation(() => ({
     getWeather: vi.fn((latitude: number, longitude: number) => {
       if (latitude === 40.7128 && longitude === -74.006) {

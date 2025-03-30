@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { WindSpeed } from '@/domain/models/WindSpeed';
+import { WindSpeed } from '@domain/models/WindSpeed';
+import { describe, expect, it } from 'vitest';
 
 describe('WindSpeed Constructor', () => {
   it('should create a WindSpeed instance with valid inputs', () => {

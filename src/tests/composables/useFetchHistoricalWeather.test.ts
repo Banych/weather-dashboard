@@ -1,12 +1,12 @@
-import useFetchHistoricalWeather from '@/composables/useFetchHistoricalWeather';
-import type { ILocation } from '@/domain/interfaces/ILocation';
-import { WeatherReport } from '@/domain/models/WeatherReport';
+import useFetchHistoricalWeather from '@composables/useFetchHistoricalWeather';
+import type { ILocation } from '@domain/interfaces/ILocation';
+import { WeatherReport } from '@domain/models/WeatherReport';
 import { flushPromises } from '@vue/test-utils';
 import { createErr, createOk } from 'option-t/plain_result';
 import { describe, expect, it, vi } from 'vitest';
 import { ref } from 'vue';
 
-vi.mock('@/domain/repositories/HistoricalWeatherRepository', () => ({
+vi.mock('@domain/repositories/HistoricalWeatherRepository', () => ({
   HistoricalWeatherRepository: vi.fn().mockImplementation(() => ({
     getWeather: vi.fn(
       (

@@ -1,7 +1,7 @@
-import HistoricalWeatherClient from '@/domain/clients/HistoricalWeatherClient';
-import type { WeatherDTO, WeatherUnitsDTO } from '@/domain/dto/WeatherDTO';
-import type { IWeatherRepository } from '@/domain/interfaces/IWeatherRepository';
-import { WeatherReport } from '@/domain/models/WeatherReport';
+import HistoricalWeatherClient from '@domain/clients/HistoricalWeatherClient';
+import type { WeatherDTO, WeatherUnitsDTO } from '@domain/dto/WeatherDTO';
+import type { IWeatherRepository } from '@domain/interfaces/IWeatherRepository';
+import { WeatherReport } from '@domain/models/WeatherReport';
 import { AxiosError } from 'axios';
 import { createErr, createOk, type Result } from 'option-t/plain_result';
 

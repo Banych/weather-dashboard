@@ -1,7 +1,7 @@
-import LocationClient from '@/domain/clients/LocationClient';
-import type { LocationDTO } from '@/domain/dto/LocationDTO';
-import type { ILocationRepository } from '@/domain/interfaces/ILocationRepository';
-import { City } from '@/domain/models/City';
+import LocationClient from '@domain/clients/LocationClient';
+import type { LocationDTO } from '@domain/dto/LocationDTO';
+import type { ILocationRepository } from '@domain/interfaces/ILocationRepository';
+import { City } from '@domain/models/City';
 import { createErr, createOk, type Result } from 'option-t/plain_result';
 
 export class CitiesRepository implements ILocationRepository {

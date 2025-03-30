@@ -10,9 +10,6 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
       "@tests/*": [
         "tests/*"
       ],
@@ -36,6 +33,9 @@
       ],
       "@utils/*": [
         "src/utils/*"
+      ],
+      "@/*": [
+        "src/*"
       ],
     }
   },

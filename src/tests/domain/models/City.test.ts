@@ -1,6 +1,6 @@
-import type { LocationDTO } from '@/domain/dto/LocationDTO';
-import type { ILocation } from '@/domain/interfaces/ILocation';
-import { City } from '@/domain/models/City';
+import type { LocationDTO } from '@domain/dto/LocationDTO';
+import type { ILocation } from '@domain/interfaces/ILocation';
+import { City } from '@domain/models/City';
 import { describe, expect, it } from 'vitest';
 
 describe('City', () => {

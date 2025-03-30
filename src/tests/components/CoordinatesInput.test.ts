@@ -1,9 +1,9 @@
-import CoordinatesInput from '@/components/CoordinatesInput.vue';
-import { advanceTimerAgainstDebounce } from '@/utils/TestsUtils';
+import CoordinatesInput from '@components/CoordinatesInput.vue';
+import { advanceTimerAgainstDebounce } from '@utils/TestsUtils';
 import { mount } from '@vue/test-utils';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('@/composables/useGeolocation', () => ({
+vi.mock('@composables/useGeolocation', () => ({
   default: () => {
     return {
       getLocation: vi.fn(() => {

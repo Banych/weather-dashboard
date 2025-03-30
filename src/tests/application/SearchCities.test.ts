@@ -1,6 +1,6 @@
-import { SearchCities } from '@/application/use-cases/SearchCities';
-import type { ILocationRepository } from '@/domain/interfaces/ILocationRepository';
-import { City } from '@/domain/models/City';
+import { SearchCities } from '@application/use-cases/SearchCities';
+import type { ILocationRepository } from '@domain/interfaces/ILocationRepository';
+import { City } from '@domain/models/City';
 import { createErr, createOk } from 'option-t/plain_result';
 import { describe, expect, it, vi } from 'vitest';
 
