@@ -48,13 +48,9 @@ const handleChangeIsHistoricalDataNeeded = (newValue: boolean) => {
   }
 };
 
-watch(
-  () => isHistoricalDataNeeded.value,
-  (newValue) => {
-    handleChangeIsHistoricalDataNeeded(newValue);
-  },
-  { immediate: true }
-);
+watch(() => isHistoricalDataNeeded.value, handleChangeIsHistoricalDataNeeded, {
+  immediate: true,
+});
 </script>
 
 <template>
