@@ -1,7 +1,7 @@
-import { FetchForecastWeather } from '@/application/use-cases/FetchForecastWeather';
-import type { ILocation } from '@/domain/interfaces/ILocation';
-import { WeatherReport } from '@/domain/models/WeatherReport';
-import { ForecastWeatherRepository } from '@/domain/repositories/ForecastWeatherRepository';
+import { FetchForecastWeather } from '@application/use-cases/FetchForecastWeather';
+import type { ILocation } from '@domain/interfaces/ILocation';
+import { WeatherReport } from '@domain/models/WeatherReport';
+import { ForecastWeatherRepository } from '@domain/repositories/ForecastWeatherRepository';
 import { ref, watch, type Ref } from 'vue';
 
 export default (location: Ref<ILocation | null>) => {

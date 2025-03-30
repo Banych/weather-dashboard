@@ -1,9 +1,9 @@
-import { describe, it, expect } from 'vitest';
-import { WeatherReport } from '@/domain/models/WeatherReport';
-import type { WeatherDTO, WeatherUnitsDTO } from '@/domain/dto/WeatherDTO';
-import { Temperature } from '@/domain/models/Temperature';
-import { RelativeHumidity } from '@/domain/models/RelativeHumidity';
-import { WindSpeed } from '@/domain/models/WindSpeed';
+import type { WeatherDTO, WeatherUnitsDTO } from '@domain/dto/WeatherDTO';
+import { RelativeHumidity } from '@domain/models/RelativeHumidity';
+import { Temperature } from '@domain/models/Temperature';
+import { WeatherReport } from '@domain/models/WeatherReport';
+import { WindSpeed } from '@domain/models/WindSpeed';
+import { describe, expect, it } from 'vitest';
 
 describe('WeatherReport', () => {
   const mockWeatherDTO: WeatherDTO = {

@@ -1,6 +1,6 @@
-import { FetchHistoricalWeather } from '@/application/use-cases/FetchHistoricalWeather';
-import type { IWeatherRepository } from '@/domain/interfaces/IWeatherRepository';
-import { WeatherReport } from '@/domain/models/WeatherReport';
+import { FetchHistoricalWeather } from '@application/use-cases/FetchHistoricalWeather';
+import type { IWeatherRepository } from '@domain/interfaces/IWeatherRepository';
+import { WeatherReport } from '@domain/models/WeatherReport';
 import { createErr, createOk } from 'option-t/plain_result';
 import { describe, expect, it, vi, type Mock } from 'vitest';
 

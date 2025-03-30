@@ -1,5 +1,5 @@
+import { Temperature } from '@domain/models/Temperature';
 import { describe, expect, it } from 'vitest';
-import { Temperature } from '@/domain/models/Temperature';
 
 describe('Temperature', () => {
   it('should create a Temperature instance from a valid DTO', () => {

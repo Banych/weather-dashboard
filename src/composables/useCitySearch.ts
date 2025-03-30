@@ -1,6 +1,6 @@
-import { SearchCities } from '@/application/use-cases/SearchCities';
-import { City } from '@/domain/models/City';
-import { CitiesRepository } from '@/domain/repositories/CitiesRepository';
+import { SearchCities } from '@application/use-cases/SearchCities';
+import { City } from '@domain/models/City';
+import { CitiesRepository } from '@domain/repositories/CitiesRepository';
 import type { Result } from 'option-t/plain_result';
 import { ref, watch, type Ref } from 'vue';
 

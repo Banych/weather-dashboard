@@ -1,12 +1,12 @@
-import { describe, it, expect, vi } from 'vitest';
-import { HistoricalWeatherRepository } from '@/domain/repositories/HistoricalWeatherRepository';
-import HistoricalWeatherClient from '@/domain/clients/HistoricalWeatherClient';
-import { createErr, createOk } from 'option-t/plain_result';
-import { WeatherReport } from '@/domain/models/WeatherReport';
+import HistoricalWeatherClient from '@domain/clients/HistoricalWeatherClient';
+import type { WeatherDTO, WeatherUnitsDTO } from '@domain/dto/WeatherDTO';
+import { WeatherReport } from '@domain/models/WeatherReport';
+import { HistoricalWeatherRepository } from '@domain/repositories/HistoricalWeatherRepository';
 import { AxiosError } from 'axios';
-import type { WeatherDTO, WeatherUnitsDTO } from '@/domain/dto/WeatherDTO';
+import { createErr, createOk } from 'option-t/plain_result';
+import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('@/domain/clients/HistoricalWeatherClient');
+vi.mock('@domain/clients/HistoricalWeatherClient');
 
 describe('HistoricalWeatherRepository', () => {
   const repository = new HistoricalWeatherRepository();

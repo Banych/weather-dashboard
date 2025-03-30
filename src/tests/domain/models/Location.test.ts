@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { Location } from '@/domain/models/Location';
-import type { LocationDTO } from '@/domain/dto/LocationDTO';
+import type { LocationDTO } from '@domain/dto/LocationDTO';
+import { Location } from '@domain/models/Location';
+import { describe, expect, it } from 'vitest';
 
 describe('Location', () => {
   describe('fromDTO', () => {

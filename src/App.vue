@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import useFetchForecastWeather from '@/composables/useFetchForecastWeather';
 import CityInput from '@components/CityInput.vue';
 import CoordinatesInput from '@components/CoordinatesInput.vue';
 import HistoricalDataInput from '@components/HistoricalDataInput.vue';
 import WeatherChart from '@components/WeatherChart.vue';
 import WeatherTable from '@components/WeatherTable.vue';
+import useFetchForecastWeather from '@composables/useFetchForecastWeather';
 import useFetchHistoricalWeather from '@composables/useFetchHistoricalWeather';
 import { type ILocation } from '@domain/interfaces/ILocation';
 import type { City } from '@domain/models/City';

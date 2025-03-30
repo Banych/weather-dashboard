@@ -1,10 +1,10 @@
-import CityInput from '@/components/CityInput.vue';
-import { advanceTimerAgainstDebounce } from '@/utils/TestsUtils';
+import CityInput from '@components/CityInput.vue';
+import { advanceTimerAgainstDebounce } from '@utils/TestsUtils';
 import { mount } from '@vue/test-utils';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { computed } from 'vue';
 
-vi.mock('@/composables/useCitySearch', () => ({
+vi.mock('@composables/useCitySearch', () => ({
   default: (query: any) => {
     const results = computed(() =>
       query.value === 'New' ? [{ id: 1, name: 'New York', country: 'USA' }] : []

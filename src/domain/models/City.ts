@@ -1,5 +1,5 @@
-import type { LocationDTO } from '@/domain/dto/LocationDTO';
-import type { ILocation } from '@/domain/interfaces/ILocation';
+import type { LocationDTO } from '@domain/dto/LocationDTO';
+import type { ILocation } from '@domain/interfaces/ILocation';
 
 export class City implements ILocation {
   constructor(

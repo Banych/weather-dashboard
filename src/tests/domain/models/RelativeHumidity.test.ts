@@ -1,11 +1,11 @@
-import { describe, it, expect } from 'vitest';
-import { RelativeHumidity } from '@/domain/models/RelativeHumidity';
 import type {
   SmallWeatherDTO,
   WeatherDTO,
   WeatherUnitsDTO,
-} from '@/domain/dto/WeatherDTO';
-import type { IWeather } from '@/domain/interfaces/IWeather';
+} from '@domain/dto/WeatherDTO';
+import type { IWeather } from '@domain/interfaces/IWeather';
+import { RelativeHumidity } from '@domain/models/RelativeHumidity';
+import { describe, expect, it } from 'vitest';
 
 describe('RelativeHumidity', () => {
   describe('fromDTO', () => {

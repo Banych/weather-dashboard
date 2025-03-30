@@ -1,4 +1,4 @@
-import { DEBOUNCE_TIME } from '@/constants/DebounceConstants';
+import { DEBOUNCE_TIME } from '@constants/DebounceConstants';
 import { flushPromises } from '@vue/test-utils';
 import { vi } from 'vitest';
 

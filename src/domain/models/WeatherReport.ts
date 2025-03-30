@@ -1,7 +1,7 @@
-import type { WeatherDTO, WeatherUnitsDTO } from '@/domain/dto/WeatherDTO';
-import { RelativeHumidity } from '@/domain/models/RelativeHumidity';
-import { Temperature } from '@/domain/models/Temperature';
-import { WindSpeed } from '@/domain/models/WindSpeed';
+import type { WeatherDTO, WeatherUnitsDTO } from '@domain/dto/WeatherDTO';
+import { RelativeHumidity } from '@domain/models/RelativeHumidity';
+import { Temperature } from '@domain/models/Temperature';
+import { WindSpeed } from '@domain/models/WindSpeed';
 
 export class WeatherReport {
   private _temperatures: Temperature[] = [];

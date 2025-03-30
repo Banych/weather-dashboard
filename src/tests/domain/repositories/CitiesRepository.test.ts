@@ -1,11 +1,11 @@
-import LocationClient from '@/domain/clients/LocationClient';
-import { City } from '@/domain/models/City';
-import { CitiesRepository } from '@/domain/repositories/CitiesRepository';
+import LocationClient from '@domain/clients/LocationClient';
+import { City } from '@domain/models/City';
+import { CitiesRepository } from '@domain/repositories/CitiesRepository';
 import { createErr, createOk } from 'option-t/plain_result';
 import { afterEach, describe, expect, it, vi, type Mock } from 'vitest';
 
-vi.mock('@/domain/clients/LocationClient');
-vi.mock('@/domain/models/City');
+vi.mock('@domain/clients/LocationClient');
+vi.mock('@domain/models/City');
 
 describe('CitiesRepository', () => {
   const citiesRepository = new CitiesRepository();
