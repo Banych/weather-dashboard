@@ -48,15 +48,10 @@ const handleChangeIsHistoricalDataNeeded = (newValue: boolean) => {
   }
 };
 
-const debouncedHandleChangeDates = debounce(
-  handleChangeIsHistoricalDataNeeded,
-  DEBOUNCE_TIME
-);
-
 watch(
   () => isHistoricalDataNeeded.value,
   (newValue) => {
-    debouncedHandleChangeDates(newValue);
+    handleChangeIsHistoricalDataNeeded(newValue);
   },
   { immediate: true }
 );
