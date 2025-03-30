@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import useGeolocation from '@composables/useGeolocation';
+import { DEBOUNCE_TIME } from '@constants/DebounceConstants';
 import type { ILocation } from '@domain/interfaces/ILocation';
+import { debounce } from 'lodash';
 import { LocateFixed, MapPin } from 'lucide-vue-next';
 
 const props = defineProps<{
@@ -39,7 +41,10 @@ const handleClickGetLocation = async () => {
   try {
     const location = await getLocation();
     if (location) {
-      emit('update:location', location);
+      emit('update:location', {
+        latitude: location.latitude,
+        longitude: location.longitude,
+      });
     } else {
       console.error('Location not found');
     }
@@ -47,6 +52,11 @@ const handleClickGetLocation = async () => {
     console.error('Error getting location:', err);
   }
 };
+
+const debouncedHandleClickGetLocation = debounce(
+  handleClickGetLocation,
+  DEBOUNCE_TIME
+);
 </script>
 
 <template>
@@ -73,7 +83,7 @@ const handleClickGetLocation = async () => {
       :disabled="isLoading"
       :class="{ 'cursor-not-allowed': isLoading, 'bg-red-800': error }"
       :title="error ? 'Error getting location' : ''"
-      @click.stop="handleClickGetLocation"
+      @click.stop="debouncedHandleClickGetLocation"
     >
       <LocateFixed class="s-5" />
     </button>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { DEBOUNCE_TIME } from '@constants/DebounceConstants';
 import {
   MAX_END_DATE_FORMATTED,
   MAX_START_DATE_FORMATTED,
 } from '@constants/TimeConstants';
+import { debounce } from 'lodash';
 import { ref, watch } from 'vue';
 
 defineProps<{
@@ -11,8 +13,8 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'update:startDate', startDate: string): void;
-  (e: 'update:endDate', endDate: string): void;
+  (e: 'update:startDate', startDate: string | null): void;
+  (e: 'update:endDate', endDate: string | null): void;
 }>();
 
 const isHistoricalDataNeeded = ref(false);
@@ -27,16 +29,28 @@ const handleEndDateChange = (event: Event) => {
   emit('update:endDate', target.value);
 };
 
-watch(
-  () => isHistoricalDataNeeded.value,
-  (newValue) => {
-    if (newValue) {
-      emit('update:startDate', MAX_START_DATE_FORMATTED);
-      emit('update:endDate', MAX_END_DATE_FORMATTED);
-    }
-  },
-  { immediate: true }
+const debouncedHandleStartDateChange = debounce(
+  handleStartDateChange,
+  DEBOUNCE_TIME
 );
+const debouncedHandleEndDateChange = debounce(
+  handleEndDateChange,
+  DEBOUNCE_TIME
+);
+
+const handleChangeIsHistoricalDataNeeded = (newValue: boolean) => {
+  if (newValue) {
+    emit('update:startDate', MAX_START_DATE_FORMATTED);
+    emit('update:endDate', MAX_END_DATE_FORMATTED);
+  } else {
+    emit('update:startDate', null);
+    emit('update:endDate', null);
+  }
+};
+
+watch(() => isHistoricalDataNeeded.value, handleChangeIsHistoricalDataNeeded, {
+  immediate: true,
+});
 </script>
 
 <template>
@@ -56,7 +70,7 @@ watch(
         :value="startDate"
         class="border border-gray-300 rounded px-2 py-1"
         :max="endDate ?? MAX_END_DATE_FORMATTED"
-        @change="handleStartDateChange"
+        @change="debouncedHandleStartDateChange"
       />
       <label for="endDate">End Date:</label>
       <input
@@ -66,7 +80,7 @@ watch(
         :max="MAX_END_DATE_FORMATTED"
         :min="startDate ?? MAX_START_DATE_FORMATTED"
         class="border border-gray-300 rounded px-2 py-1"
-        @change="handleEndDateChange"
+        @change="debouncedHandleEndDateChange"
       />
     </template>
   </div>

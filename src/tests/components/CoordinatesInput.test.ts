@@ -1,6 +1,7 @@
 import CoordinatesInput from '@/components/CoordinatesInput.vue';
-import { flushPromises, mount } from '@vue/test-utils';
-import { describe, expect, it, vi } from 'vitest';
+import { advanceTimerAgainstDebounce } from '@/utils/TestsUtils';
+import { mount } from '@vue/test-utils';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/composables/useGeolocation', () => ({
   default: () => {
@@ -18,6 +19,14 @@ vi.mock('@/composables/useGeolocation', () => ({
 }));
 
 describe('CoordinatesInput.vue', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('renders inputs and labels for coordinates', () => {
     const wrapper = mount(CoordinatesInput, {
       props: {
@@ -39,12 +48,15 @@ describe('CoordinatesInput.vue', () => {
     const longitudeInput = wrapper.find('input[id="longitude"]');
 
     await latitudeInput.setValue('40.7128');
+
+    await advanceTimerAgainstDebounce();
+
     await wrapper.setProps({
       currentLocation: { latitude: 40.7128, longitude: 0 },
     });
     await longitudeInput.setValue('-74.0060');
 
-    await wrapper.vm.$nextTick();
+    await advanceTimerAgainstDebounce();
 
     expect(wrapper.emitted()).toHaveProperty('update:location');
     expect(wrapper.emitted()['update:location'][0]).toEqual([
@@ -65,8 +77,7 @@ describe('CoordinatesInput.vue', () => {
 
     await button.trigger('click');
 
-    await flushPromises();
-    await wrapper.vm.$nextTick();
+    await advanceTimerAgainstDebounce();
 
     expect(wrapper.emitted()).toHaveProperty('update:location');
     expect(wrapper.emitted()['update:location'][0]).toEqual([
@@ -87,7 +98,6 @@ describe('CoordinatesInput.vue', () => {
     await wrapper.setProps({
       currentLocation: { latitude: 40.7128, longitude: -74.006 },
     });
-    await wrapper.vm.$nextTick();
 
     expect((latitudeInput.element as HTMLInputElement).value).toBe('40.7128');
     expect((longitudeInput.element as HTMLInputElement).value).toBe('-74.006');
