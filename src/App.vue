@@ -92,31 +92,33 @@ const handleSelectCity = (city: City) => {
         </li>
       </ul>
     </div>
-    <WeatherTable
-      v-if="!!forecastWeatherData"
-      :report="forecastWeatherData as WeatherReport"
-    >
-      <template #title>
-        <span>Forecast Weather</span>
-      </template>
-    </WeatherTable>
-    <WeatherChart
-      v-if="!!forecastWeatherData"
-      title="Forecast Weather"
-      :report="forecastWeatherData as WeatherReport"
-    />
-    <WeatherTable
-      v-if="!!historicalWeatherData"
-      :report="historicalWeatherData as WeatherReport"
-    >
-      <template #title>
-        <span>Historical Weather</span>
-      </template>
-    </WeatherTable>
-    <WeatherChart
-      v-if="!!historicalWeatherData"
-      title="Historical Weather"
-      :report="historicalWeatherData as WeatherReport"
-    />
+    <template v-if="!isLoading && !allErrors">
+      <WeatherTable
+        v-if="!!forecastWeatherData"
+        :report="forecastWeatherData as WeatherReport"
+      >
+        <template #title>
+          <span>Forecast Weather</span>
+        </template>
+      </WeatherTable>
+      <WeatherChart
+        v-if="!!forecastWeatherData"
+        title="Forecast Weather"
+        :report="forecastWeatherData as WeatherReport"
+      />
+      <WeatherTable
+        v-if="!!historicalWeatherData"
+        :report="historicalWeatherData as WeatherReport"
+      >
+        <template #title>
+          <span>Historical Weather</span>
+        </template>
+      </WeatherTable>
+      <WeatherChart
+        v-if="!!historicalWeatherData"
+        title="Historical Weather"
+        :report="historicalWeatherData as WeatherReport"
+      />
+    </template>
   </div>
 </template>

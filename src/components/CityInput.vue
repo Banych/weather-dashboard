@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { City } from '@domain/models/City';
 import useCitySearch from '@/composables/useCitySearch';
+import { DEBOUNCE_TIME } from '@constants/DebounceConstants';
+import { City } from '@domain/models/City';
+import { debounce } from 'lodash';
 import { ref } from 'vue';
 
 const emit = defineEmits<{
@@ -25,6 +27,13 @@ const handleFocus = () => {
   }
   selectedCity.value = null;
 };
+
+const handleQueryChange = (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  query.value = input.value;
+};
+
+const debouncedHandleQueryChange = debounce(handleQueryChange, DEBOUNCE_TIME);
 </script>
 
 <template>
@@ -35,12 +44,12 @@ const handleFocus = () => {
       type="text"
       placeholder="Enter city name"
       class="border border-gray-300 rounded p-2 w-full"
-      @input="query = ($event.target as HTMLInputElement).value"
+      @input="debouncedHandleQueryChange"
       @focus="handleFocus"
     />
     <ul
       v-if="query"
-      class="absolute inset-x-0 top-20 border border-black shadow-sm p-2 max-h-52 overflow-y-auto bg-white z-10"
+      class="absolute inset-x-0 top-11 border border-black shadow-sm p-2 max-h-52 overflow-y-auto bg-white z-10"
     >
       <li v-if="isLoading" class="text-gray-500">Loading...</li>
       <li v-if="error" class="text-red-500">Error: {{ error }}</li>

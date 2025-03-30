@@ -1,6 +1,7 @@
 import CityInput from '@/components/CityInput.vue';
+import { advanceTimerAgainstDebounce } from '@/utils/TestsUtils';
 import { mount } from '@vue/test-utils';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { computed } from 'vue';
 
 vi.mock('@/composables/useCitySearch', () => ({
@@ -17,6 +18,14 @@ vi.mock('@/composables/useCitySearch', () => ({
 }));
 
 describe('CityInput.vue', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('renders input and label', () => {
     const wrapper = mount(CityInput);
 
@@ -30,6 +39,8 @@ describe('CityInput.vue', () => {
     const input = wrapper.find('input[placeholder="Enter city name"]');
     await input.setValue('Loading');
 
+    await advanceTimerAgainstDebounce();
+
     expect(wrapper.find('ul').text()).toContain('Loading...');
   });
 
@@ -37,6 +48,8 @@ describe('CityInput.vue', () => {
     const wrapper = mount(CityInput);
     const input = wrapper.find('input[placeholder="Enter city name"]');
     await input.setValue('Error');
+
+    await advanceTimerAgainstDebounce();
 
     expect(wrapper.find('ul').text()).toContain('Error: An error occurred');
   });
@@ -47,6 +60,8 @@ describe('CityInput.vue', () => {
     const input = wrapper.find('input[placeholder="Enter city name"]');
     await input.setValue('New');
 
+    await advanceTimerAgainstDebounce();
+
     const results = wrapper.findAll('li');
     expect(results).toHaveLength(1);
     expect(results[0].text()).toContain('New York, USA');
@@ -56,6 +71,9 @@ describe('CityInput.vue', () => {
     const wrapper = mount(CityInput);
     const input = wrapper.find('input[placeholder="Enter city name"]');
     await input.setValue('New');
+
+    await advanceTimerAgainstDebounce();
+
     const result = wrapper.find('li');
     await result.trigger('click');
     expect(wrapper.emitted('select')).toBeDefined();
@@ -68,6 +86,9 @@ describe('CityInput.vue', () => {
     const wrapper = mount(CityInput);
     const input = wrapper.find('input[placeholder="Enter city name"]');
     await input.setValue('New');
+
+    await advanceTimerAgainstDebounce();
+
     const result = wrapper.find('li');
     await result.trigger('click');
     expect((input.element as HTMLInputElement).value).toBe('New York');
@@ -77,6 +98,9 @@ describe('CityInput.vue', () => {
     const wrapper = mount(CityInput);
     const input = wrapper.find('input[placeholder="Enter city name"]');
     await input.setValue('New');
+
+    await advanceTimerAgainstDebounce();
+
     const result = wrapper.find('li');
     await result.trigger('click');
     await input.trigger('focus');
