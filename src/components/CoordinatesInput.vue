@@ -26,6 +26,11 @@ const handleLatitudeChange = (event: Event) => {
   }
 };
 
+const debouncedHandleLatitudeChange = debounce(
+  handleLatitudeChange,
+  DEBOUNCE_TIME
+);
+
 const handleLongitudeChange = (event: Event) => {
   const input = event.target as HTMLInputElement;
   const value = parseFloat(input.value);
@@ -36,6 +41,11 @@ const handleLongitudeChange = (event: Event) => {
     });
   }
 };
+
+const debouncedHandleLongitudeChange = debounce(
+  handleLongitudeChange,
+  DEBOUNCE_TIME
+);
 
 const handleClickGetLocation = async () => {
   try {
@@ -68,7 +78,7 @@ const debouncedHandleClickGetLocation = debounce(
       placeholder="Enter latitude"
       class="border border-gray-300 rounded p-2"
       :value="currentLocation?.latitude ?? ''"
-      @input="handleLatitudeChange"
+      @input="debouncedHandleLatitudeChange"
     />
     <input
       id="longitude"
@@ -76,7 +86,7 @@ const debouncedHandleClickGetLocation = debounce(
       placeholder="Enter longitude"
       class="border border-gray-300 rounded p-2"
       :value="currentLocation?.longitude ?? ''"
-      @input="handleLongitudeChange"
+      @input="debouncedHandleLongitudeChange"
     />
     <button
       class="bg-blue-500 text-white rounded p-2 hover:bg-blue-600"
